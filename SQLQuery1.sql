@@ -1,0 +1,93 @@
+--Создание и заполнение таблиц
+
+--INSERT INTO Category (category_name) VALUES
+--('Автотовары'),('Электроника'),('Книги'),('Косметика'),('Товары для дома'),
+--('Зоотовары'),('Одежда'),('Канцелярия'),('Спорттовары'),('Химия');
+
+--CREATE TABLE Custumer(
+--	custumer_id INT PRIMARY KEY IDENTITY (1,1),
+--	full_name VARCHAR(140) NOT NULL,
+--	email VARCHAR(200) NOT NULL,
+--	city VARCHAR(90) NOT NULL
+--)
+--INSERT INTO Custumer(full_name, email, city) VALUES
+--('Иван Петров',    'ivan@mail.ru',     'Москва'),
+--('Мария Сидорова', 'maria@mail.ru',    'Санкт-Петербург'),
+--('Олег Кузнецов',  'oleg@mail.ru',     'Казань'),
+--('Анна Смирнова',  'anna@mail.ru',     'Москва'),
+--('Дмитрий Волков', 'dmitry@mail.ru',   'Новосибирск'),
+--('Елена Морозова', 'elena@mail.ru',    'Екатеринбург'),
+--('Сергей Новиков', 'sergey@mail.ru',   'Москва'),
+--('Ольга Фёдорова', 'olga@mail.ru',     'Самара'),
+--('Павел Козлов',   'pavel@mail.ru',    'Казань'),
+--('Наталья Лебедева','natalia@mail.ru', 'Санкт-Петербург'),
+--('Артём Соколов',  'artem@mail.ru',    'Уфа'),
+--('Виктория Павлова','vika@mail.ru',    'Москва');
+
+--CREATE TABLE Products(
+--	products_id INT PRIMARY KEY IDENTITY(1,1),
+--	products_name VARCHAR(100) NOT NULL,
+--	category_id INT NOT NULL REFERENCES Category(category_id),
+--	price INT NOT NULL CHECK (price >= 0),
+--	stock INT NOT NULL CHECK (stock >= 0) DEFAULT 0 
+--)
+--INSERT INTO Products(products_name, category_id, price, stock) VALUES
+--('Смартфон Galaxy', 2, 25000, 20),
+--('Ноутбук Lenovo', 2, 45000, 10),
+--('Краски акриловые', 8, 5000, 30),
+--('Роман «Мастер и Маргарита»', 3, 800, 50),
+--('Учебник SQL', 3, 1500, 40),
+--('Футболка х/б', 7, 700, 100),
+--('Кроссовки Nike', 7, 4500, 25),
+--('Мяч футбольный', 9, 1200, 15),
+--('Магнитола',1, 1800, 20),
+--('Крем для лица', 4, 3200, 12),
+--('Крем для рук', 4, 350, 200),
+--('Чистящее средвство', 10, 650, 80),
+--('Автомобильный держатель', 1, 900, 5),
+--('Корм для рыб', 6, 450, 40),
+--('Швабра для полов',5, 1200, 50),
+--('Корм для собак', 6, 2050, 100),
+--('Шторы', 5, 4300, 150);
+
+--CREATE TABLE Orders (
+--    order_id     INT PRIMARY KEY IDENTITY(1,1),
+--    custumer_id  INT NOT NULL REFERENCES Custumer(custumer_id),
+--    status      VARCHAR(20) NOT NULL DEFAULT 'New',
+--    total_amount INT NOT NULL DEFAULT 0
+--);
+--INSERT INTO Orders (custumer_id, status, total_amount) VALUES
+--(1, 'Paid', 30000), (2, 'Paid', 45000), (3, 'Shipped', 5000),
+--(4, 'New', 2300), (5,'Paid', 5700), (6, 'Cancelled', 3200),
+--(7, 'Paid', 25000), (8, 'Shipped', 1800), (9, 'Paid', 1100),
+--(1, 'New', 800),(2, 'Paid', 2700), (10, 'New', 3200);
+
+--CREATE TABLE OrderItems (
+--    OrderItemId INT PRIMARY KEY IDENTITY(1,1),
+--    order_id     INT NOT NULL REFERENCES Orders(order_id),
+--    product_id   INT NOT NULL REFERENCES Products(products_id),
+--    Quantity    INT NOT NULL CHECK (Quantity > 0),
+--    UnitPrice   INT NOT NULL
+--);
+--INSERT INTO OrderItems(order_id, product_id, Quantity, UnitPrice) VALUES
+--(1, 1, 1, 25000),(1, 3, 1, 5000),(2, 2, 1, 45000),(3, 3, 1, 5000),
+--(4, 4, 1, 800),(4, 5, 1, 1500),(5, 7, 1, 4500),
+--(5, 8, 1, 1200),(6, 10,1,3200),(7, 1, 1, 25000),
+--(8, 9, 1, 1800),(9, 11,3,350),(10,4, 1, 800),
+--(11,12,4,650),(12,10,1,3200);
+
+--CREATE TABLE Payment(
+--	payment_id INT PRIMARY KEY IDENTITY (1,1),
+--	order_id INT NOT NULL REFERENCES Orders(order_id),
+--	amount INT NOT NULL
+--)
+--INSERT INTO Payment (order_id, amount) VALUES
+--(1, 30000),(2, 45000),(3, 5000),(5,5700),
+--(7, 25000),(8,  1800),(9,  1100),(11, 2700.00),
+--(1,  5000.00),(2, 10000.00),(5,  5700.00),(7,  2500.00);
+
+--Простые запросы
+
+--SELECT custumer_id, full_name, city FROM Custumer
+--WHERE city = 'Уфа'
+--ORDER BY city
